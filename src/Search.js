@@ -12,7 +12,8 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) => {
+    BooksAPI.getAll().then((books) => {      
+      console.log('books ', books);
       this.setState({ allBooks: books });
     });
   }
@@ -28,6 +29,7 @@ class Search extends Component {
   render() {
     let showingBooks;
     const { query, allBooks } = this.state;
+    const { moveBook } = this.props;
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i')
@@ -48,7 +50,7 @@ class Search extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Shelf books={showingBooks}/>
+          <Shelf books={showingBooks} moveBook={moveBook}/>
         </div>
       </div>
     )

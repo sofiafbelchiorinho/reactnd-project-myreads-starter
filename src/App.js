@@ -8,39 +8,43 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {  
-    currentlyReading: [],
-    wantToRead: [],
-    read: []
+    shelves: [
+      {id: "currentlyReading", title: "Currently Reading", books: []},
+      {id: "wantToRead", title: "Want To Read", books: []},
+      {id: "read", title: "Read", books: []}
+    ]
   }
 
   componentDidMount() {
-    this.getAll();
+    this.setBookshelf();
+      
   }
 
   update = (bookId, shelf) => {
     BooksAPI.update(bookId, shelf).then(() => {
-      this.getAll();
+      this.setBookshelf();
     });
   }
 
-  getAll= () => {
+  setBookshelf= () => {
     BooksAPI.getAll().then((books) => {
-      console.log('books --> ', books);
-      this.setState({
-        currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
-        wantToRead: books.filter(book => book.shelf === 'wantToRead'),
-        read: books.filter(book => book.shelf === 'read')    
-      });
+      console.log('books ', books);
+      this.setState((prevState) => ({
+        shelves: prevState.shelves.map((shelf) => {
+          shelf.books = books.filter(book => book.shelf === shelf.id);
+          return shelf;
+        })
+      }))
     });
   }
 
   render() {
-    const { read, wantToRead, currentlyReading } = this.state;
+    const { shelves } = this.state;
 
     return (
       <div className="app">
         <Route path='/search' render={() => (
-          <Search />
+          <Search moveBook={this.update}/>
         )}/>
         <Route exact path='/' render={() => (
           <div className="list-books">
@@ -49,9 +53,11 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Shelf title="Currently Reading" books={currentlyReading} moveBook={this.update}/>
-                <Shelf title="Want To Read" books={wantToRead} moveBook={this.update}/>
-                <Shelf title="Read" books={read} moveBook={this.update}/>
+                {
+                  shelves.map((shelf) => {
+                    return <Shelf key={shelf.title} title={shelf.title} books={shelf.books} moveBook={this.update}/>
+                  })
+                }
               </div>
             </div>
             <div className="open-search">

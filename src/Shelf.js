@@ -25,7 +25,8 @@ class Shelf extends React.Component {
 
   static propTypes = {
     title: PropTypes.string,
-    books: PropTypes.array.isRequired,
+    books: PropTypes.array,
+    moveBook: PropTypes.func.isRequired
   }
 }
 
