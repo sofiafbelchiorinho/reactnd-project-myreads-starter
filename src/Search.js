@@ -1,0 +1,57 @@
+import React, { Component } from 'react';
+import * as BooksAPI from './BooksAPI'
+import Shelf from './Shelf';
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
+
+class Search extends Component {
+  state = {
+    query: '',
+    allBooks: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ allBooks: books });
+    });
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query: query.trim() })
+  }
+
+  clearQuery = () => {
+    this.setState({ query: '' })
+  }
+
+  render() {
+    let showingBooks;
+    const { query, allBooks } = this.state;
+
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i')
+      showingBooks = allBooks.filter((book) => match.test(book.title))
+    } else {
+      showingBooks = allBooks
+    }
+
+    showingBooks.sort(sortBy('title'))
+
+    return(
+      <div className="search-books">
+        <div className="search-books-bar">
+          <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+          <div className="search-books-input-wrapper">
+            <input type='text' placeholder='Search books..' value={query} 
+                   onChange={(event) => this.updateQuery(event.target.value)}/>               
+          </div>
+        </div>
+        <div className="search-books-results">
+          <Shelf books={showingBooks}/>
+        </div>
+      </div>
+    )
+  }
+
+}
+export default Search;
