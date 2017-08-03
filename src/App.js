@@ -28,7 +28,6 @@ class BooksApp extends React.Component {
 
   setBookshelf= () => {
     BooksAPI.getAll().then((books) => {
-      console.log('books ', books);
       this.setState((prevState) => ({
         shelves: prevState.shelves.map((shelf) => {
           shelf.books = books.filter(book => book.shelf === shelf.id);
