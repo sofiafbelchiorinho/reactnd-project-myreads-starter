@@ -3,16 +3,22 @@ import PropTypes from 'prop-types'
 
 class Book extends React.Component {
 
+  handleChange = (e) => {
+    if(this.props.moveBook){
+      this.props.moveBook(this.props.book, e.target.value);  
+    }       
+  }
+
   render() {
-    const { title, authors, imageLinks } = this.props;
+    const { title, authors, imageLinks, shelf } = this.props.book;
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=jAUODAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api")' }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url('+ imageLinks.thumbnail +')' }}></div>
             <div className="book-shelf-changer">
-              <select>
+              <select value={shelf} onChange={this.handleChange}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -22,16 +28,15 @@ class Book extends React.Component {
             </div>
           </div>
           <div className="book-title">{title}</div>
-          <div className="book-authors">{authors[0]}</div>
+          <div className="book-authors">{authors.join(', ')}</div>
         </div>
       </li>
     )
   }
 
    static propTypes = {
-    title: PropTypes.string, //.isRequired,
-    authors: PropTypes.array, //.isRequired,
-    imageLinks: PropTypes.object, //.isRequired
+    book: PropTypes.object.isRequired,
+    moveBook: PropTypes.func.isRequired
   }
 
 }

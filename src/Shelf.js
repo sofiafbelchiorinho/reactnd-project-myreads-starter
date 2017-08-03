@@ -5,7 +5,7 @@ import Book from './Book'
 class Shelf extends React.Component {
 
   render() {
-    const { books, title } = this.props;
+    const { books, title, moveBook } = this.props;
 
     return (
       <div className="bookshelf">
@@ -14,7 +14,7 @@ class Shelf extends React.Component {
           <ol className="books-grid">
             {
               books.map((book) => (
-                <Book key={book.title} title={book.title} authors={book.authors} imageLinks={book.imageLinks}/> 
+                <Book key={book.title} book={book} moveBook={moveBook} /> 
               ))
             }
           </ol>
@@ -24,8 +24,8 @@ class Shelf extends React.Component {
   }
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    books: PropTypes.array //.isRequired,
+    title: PropTypes.string,
+    books: PropTypes.array.isRequired,
   }
 }
 
