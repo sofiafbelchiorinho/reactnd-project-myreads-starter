@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 class Book extends React.Component {
 
@@ -10,15 +11,20 @@ class Book extends React.Component {
   }
 
   render() {
-    const { title, authors, imageLinks, shelf } = this.props.book;
+    const { book } = this.props;
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url('+ imageLinks.thumbnail || imageLinks.smallThumbnail +')' }}></div>
+            <div className="book-cover" 
+                 style={{ width: 128, height: 193, 
+                   backgroundImage: 'url('+ book.imageLinks.thumbnail || book.imageLinks.smallThumbnail +')' 
+                }}>
+            </div>
+            <Link to={`/book/${book.id}`} className="book-shelf-preview"></Link>
             <div className="book-shelf-changer">
-              <select value={shelf} onChange={this.handleChange}>
+              <select value={book.shelf} onChange={this.handleChange}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -27,8 +33,8 @@ class Book extends React.Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{title}</div>
-          <div className="book-authors">{authors && authors.join(', ')}</div>
+          <div className="book-title">{book.title}</div>
+          <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
         </div>
       </li>
     )

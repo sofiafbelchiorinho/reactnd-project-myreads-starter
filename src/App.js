@@ -4,6 +4,7 @@ import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom';
 import Search from './Search'
 import Shelf from './Shelf'
+import Preview from './Preview'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -17,8 +18,7 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    this.setBookshelf();
-      
+    this.setBookshelf();      
   }
 
   updateBook = (bookId, shelf) => {
@@ -56,7 +56,7 @@ class BooksApp extends React.Component {
               <div>
                 {
                   shelves.map((shelf) => {
-                    return <Shelf key={shelf.title} 
+                    return <Shelf key={shelf.id} 
                       title={shelf.title} 
                       books={shelf.books} 
                       moveBook={this.updateBook}/>
@@ -68,7 +68,8 @@ class BooksApp extends React.Component {
               <Link to='/search' className='add-contact'>Add a book</Link>
             </div>
           </div>
-        )}/>     
+        )}/>  
+        <Route path='/book/:bookId' component={Preview}/>   
       </div>
     )
   }
