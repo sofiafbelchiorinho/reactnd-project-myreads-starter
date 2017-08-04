@@ -38,7 +38,7 @@ class Preview extends React.Component {
                 <div className="book-description">{book.description}</div>
                 <div className="book-categories">
                   {book.categories.map(category => (
-                    <span>{category}</span>
+                    <span key={category}>{category}</span>
                   ))}
                 </div>
                 <div className="book-publishInfo">Published by {`${book.publisher}`} on {`${book.publishedDate}`}</div>   
@@ -51,7 +51,7 @@ class Preview extends React.Component {
   }
 
   static propTypes = {
-    params: React.PropTypes.object,
+    params: PropTypes.object,
   }
 }
 export default Preview

@@ -1,3 +1,46 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?n72zoy');
+  src:  url('fonts/icomoon.eot?n72zoy#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?n72zoy') format('truetype'),
+    url('fonts/icomoon.woff?n72zoy') format('woff'),
+    url('fonts/icomoon.svg?n72zoy#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-search:before {
+  content: "\e986";
+}
+.icon-menu:before {
+  content: "\e9bd";
+}
+.icon-eye:before {
+  content: "\e9ce";
+}
+.icon-heart:before {
+  content: "\e9da";
+}
+.icon-plus:before {
+  content: "\ea0a";
+}
+
+
 html, body, .root {
   height: 100%;
 }
@@ -56,12 +99,18 @@ body, .app {
   height: 50px;
   border-radius: 50%;
   background: #2e7d32;
-  background-image: url('./icons/add.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 28px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  font-size: 0;
+  font-size: 1.4em;
+  color: #fff;
+}
+
+.open-search a:before{
+    font-family: 'icomoon';
+    font-style: normal;
+    position: absolute;
+    content: "\e986";
+    top: 9px;
+    left: 13px;
 }
 
 /* search page */
@@ -145,7 +194,7 @@ body, .app {
 .book-shelf-changer,
 .book-shelf-preview {
   position: absolute; 
-  right: 0;
+  right: -5px;
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -155,15 +204,36 @@ body, .app {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
+.book-shelf-changer:before,
+.book-shelf-preview:before{    
+    font-family: 'icomoon';
+    color: white;
+    font-style: normal;
+    position: absolute;
+    
+}
+
 .book-shelf-changer{
   background: #60ac5d;  
   bottom: 10px;
-  background-image: url('./icons/arrow-drop-down.svg');
+}
+
+.book-shelf-changer:before{
+  content: "\ea0a";
+  top: 6px;
+  left: 9px;
 }
 
 .book-shelf-preview{
   bottom: 50px;
   background: #00bcd4;  
+  text-decoration: none;
+}
+
+.book-shelf-preview:before{
+  content: "\e9bd";
+  top: 6px;
+  left: 9px;
 }
 
 .book-shelf-changer select {

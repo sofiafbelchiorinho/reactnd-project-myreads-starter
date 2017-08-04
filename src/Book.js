@@ -22,9 +22,9 @@ class Book extends React.Component {
                    backgroundImage: 'url('+ book.imageLinks.thumbnail || book.imageLinks.smallThumbnail +')' 
                 }}>
             </div>
-            <Link to={`/book/${book.id}`} className="book-shelf-preview"></Link>
+            <Link to={`/book/${book.id}`} className="book-shelf-preview" alt="See book details"></Link>
             <div className="book-shelf-changer">
-              <select value={book.shelf} onChange={this.handleChange}>
+              <select value={book.shelf} onChange={this.handleChange} alt="Add to bookshelf">
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
