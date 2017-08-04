@@ -8,6 +8,7 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {  
+    myBooks: [],
     shelves: [
       {id: "currentlyReading", title: "Currently Reading", books: []},
       {id: "wantToRead", title: "Want To Read", books: []},
@@ -20,7 +21,7 @@ class BooksApp extends React.Component {
       
   }
 
-  update = (bookId, shelf) => {
+  updateBook = (bookId, shelf) => {
     BooksAPI.update(bookId, shelf).then(() => {
       this.setBookshelf();
     });
@@ -29,6 +30,7 @@ class BooksApp extends React.Component {
   setBookshelf= () => {
     BooksAPI.getAll().then((books) => {
       this.setState((prevState) => ({
+        myBooks: books,
         shelves: prevState.shelves.map((shelf) => {
           shelf.books = books.filter(book => book.shelf === shelf.id);
           return shelf;
@@ -38,12 +40,12 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const { shelves } = this.state;
+    const { shelves, myBooks } = this.state;
 
     return (
       <div className="app">
         <Route path='/search' render={() => (
-          <Search moveBook={this.update}/>
+          <Search myBooks={myBooks} addBook={this.updateBook}/>
         )}/>
         <Route exact path='/' render={() => (
           <div className="list-books">
@@ -54,7 +56,10 @@ class BooksApp extends React.Component {
               <div>
                 {
                   shelves.map((shelf) => {
-                    return <Shelf key={shelf.title} title={shelf.title} books={shelf.books} moveBook={this.update}/>
+                    return <Shelf key={shelf.title} 
+                      title={shelf.title} 
+                      books={shelf.books} 
+                      moveBook={this.updateBook}/>
                   })
                 }
               </div>

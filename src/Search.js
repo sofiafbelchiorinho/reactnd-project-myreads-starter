@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom';
 import Shelf from './Shelf';
 import sortBy from 'sort-by'
+import _ from 'lodash';
 
 class Search extends Component {
   state = {
     query: '',
-    allBooks: [],
-    books: []
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {      
-      console.log('books ', books);
-      this.setState({ books: books });
-    });
+    allBooks: []
   }
 
   updateQuery = (query) => {        
-    //this.setState({ query: query.trim() })
+    this.setState({ query: query.trim() })
     BooksAPI.search(query).then((books) => {
-      console.log('books ', books);
-      this.setState({ allBooks: books });
-      this.state.allBooks.sort(sortBy('title'));
+      if(books && !books.error){
+        //books in my reads will be marked with corresponding shelf
+        this.setState({ 
+          allBooks: books.map((book) => {
+             let match = _.find(this.props.myBooks, {id: book.id});
+             book.shelf = match ? match.shelf : 'none';     
+             return book;
+          }).sort(sortBy('title'))
+        });
+      }      
     });        
   }
 
@@ -31,15 +32,9 @@ class Search extends Component {
     this.setState({ query: '' })
   }
 
-  getAll = () => {
-    BooksAPI.getAll().then((books) => {
-      this.setState({books: books})      
-    });
-  }
-
   render() {
-    const { query, books } = this.state;
-    const { moveBook } = this.props;
+    const { query, allBooks } = this.state;
+    const { addBook } = this.props;
    
     return(
       <div className="search-books">
@@ -51,10 +46,15 @@ class Search extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Shelf books={allBooks} moveBook={moveBook}/>
+          <Shelf books={allBooks} moveBook={addBook}/>
         </div>
       </div>
     )
+  }
+
+  static propTypes = {
+    myBooks: PropTypes.array.isRequired,
+    addBook: PropTypes.func.isRequired
   }
 
 }
