@@ -1,4 +1,10 @@
 
+This project was developed during the React Nanodegree training, a course by Udacity. 
+It's the first project, related to the module React Fundamentals. 
+Find below the links to Udacity and the React course.
+Udacity: https://www.udacity.com/
+React Nanodegree :https://www.udacity.com/course/react-nanodegree--nd019
+
 ## How to install the project
 
 1. Make sure you have Node.JS installed in your machine, version 6.10.2
@@ -7,10 +13,9 @@
 
 ## Side Notes
 
-T he search from BooksAPI is limited to a particular set of search terms. You can find these search terms here: https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+The search from BooksAPI is limited to a particular set of search terms. You can find these search terms here: https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
                   
 However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if you don't find a specific author or title. Every search is limited by search terms.
-
 
 ## Backend Server
 
