@@ -2,6 +2,7 @@
 This project was developed during the React Nanodegree training, a course by Udacity. 
 It's the first project, related to the module React Fundamentals. 
 Find below the links to Udacity and the React course.
+
 Udacity: https://www.udacity.com/
 React Nanodegree :https://www.udacity.com/course/react-nanodegree--nd019
 
