@@ -27,7 +27,7 @@ class BooksApp extends React.Component {
     });
   }
 
-  setBookshelf= () => {
+  setBookshelf = () => {
     BooksAPI.getAll().then((books) => {
       this.setState((prevState) => ({
         myBooks: books,

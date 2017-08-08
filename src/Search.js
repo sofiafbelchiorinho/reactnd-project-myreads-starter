@@ -16,7 +16,6 @@ class Search extends Component {
     this.setState({ query: query.trim() })
     BooksAPI.search(query).then((books) => {
       if(books && !books.error){
-        //books in my reads will be marked with corresponding shelf
         this.setState({ 
           allBooks: books.map((book) => {
              let match = _.find(this.props.myBooks, {id: book.id});
@@ -41,8 +40,7 @@ class Search extends Component {
         <div className="search-books-bar">
           <Link to='/' className='close-search'>Add a book</Link>
           <div className="search-books-input-wrapper">
-            <input type='text' placeholder='Search books..' value={query} 
-                   onChange={(event) => this.updateQuery(event.target.value)}/>               
+            <input type='text' placeholder='Search books..' value={query} onChange={(event) => this.updateQuery(event.target.value)}/>               
           </div>
         </div>
         <div className="search-books-results">

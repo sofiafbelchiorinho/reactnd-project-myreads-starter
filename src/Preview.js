@@ -27,21 +27,22 @@ class Preview extends React.Component {
           book && (
             <div>
               <div className="list-books-title">
+                <a className="close-search" href="/"></a>
                 <h3>{`${book.title}`} by {`${book.authors && book.authors.join('and ')}`}</h3>
               </div>
               <div className="book-content">
-                <div className="book-cover" style={{  backgroundImage: `url(${book.imageLinks.thumbnail || book.imageLinks.smallThumbnail})` 
-                      }}>
-                  </div>
+                <div className="book-cover" style={{  backgroundImage: `url(${book.imageLinks.thumbnail || book.imageLinks.smallThumbnail})`}}></div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors && book.authors.join(', ')}</div>   
                 <div className="book-description">{book.description}</div>
                 <div className="book-categories">
-                  {book.categories.map(category => (
+                  {book.categories && book.categories.map(category => (
                     <span key={category}>{category}</span>
                   ))}
                 </div>
-                <div className="book-publishInfo">Published by {`${book.publisher}`} on {`${book.publishedDate}`}</div>   
+                { 
+                  book.publisher && (<div className="book-publishInfo">Published by {`${book.publisher}`} on {`${book.publishedDate}`}</div> )    
+                }
               </div>
             </div>
           )
