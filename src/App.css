@@ -294,6 +294,11 @@ body, .app {
     font-size: 0.9em;  
 }
 
+.book .book-cover{
+  width: 128px;
+  height: 193px;
+}
+
 .book-content .book-cover{
   float: left;
   margin-right: 20px;

@@ -17,11 +17,7 @@ class Search extends Component {
     BooksAPI.search(query).then((books) => {
       if(books && !books.error){
         this.setState({ 
-          allBooks: books.map((book) => {
-             let match = _.find(this.props.myBooks, {id: book.id});
-             book.shelf = match ? match.shelf : 'none';     
-             return book;
-          }).sort(sortBy('title'))
+          allBooks: this.matchWithMyReads(books)
         });
       }      
     });        
@@ -31,10 +27,21 @@ class Search extends Component {
     this.setState({ query: '' })
   }
 
+  matchWithMyReads = (books) => {
+    return books.map((book) => {
+             let match = _.find(this.props.myBooks, {id: book.id});
+             book.shelf = match ? match.shelf : 'none';     
+             return book;
+          }).sort(sortBy('title'));
+ }
+
   render() {
-    const { query, allBooks } = this.state;
+    let { allBooks } = this.state;
+    const { query} = this.state;
     const { addBook } = this.props;
-   
+
+    allBooks = this.matchWithMyReads(allBooks);
+  
     return(
       <div className="search-books">
         <div className="search-books-bar">
