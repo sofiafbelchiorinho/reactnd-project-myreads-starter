@@ -2,6 +2,8 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom';
+import keyIndex from 'react-key-index';
+import _ from 'lodash';
 import Search from './Search'
 import Shelf from './Shelf'
 import Preview from './Preview'
@@ -29,6 +31,7 @@ class BooksApp extends React.Component {
 
   setBookshelf = () => {
     BooksAPI.getAll().then((books) => {
+      //console.log(_.map(keyIndex(books,1), '_idId')); 
       this.setState((prevState) => ({
         myBooks: books,
         shelves: prevState.shelves.map((shelf) => {
